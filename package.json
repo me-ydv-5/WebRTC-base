@@ -1,0 +1,37 @@
+{
+  "name": "agora",
+  "version": "1.0.0",
+  "description": "Devpost's Agora Video SDK Hackathon ",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/me-ydv-5/agora-hackathon.git"
+  },
+  "keywords": [
+    "agora",
+    "video",
+    "SDK",
+    "hackathon",
+    "web",
+    "application",
+    "mean",
+    "node",
+    "express"
+  ],
+  "author": "Sahil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/me-ydv-5/agora-hackathon/issues"
+  },
+  "homepage": "https://github.com/me-ydv-5/agora-hackathon#readme"
+}
