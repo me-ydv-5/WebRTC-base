@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {
   ReflexContainer,
   ReflexSplitter,
@@ -7,6 +6,8 @@ import {
 } from 'react-reflex'
 
 import 'react-reflex/styles.css'
+import '../assets/css/app.css'
+
 
 class ReflexBasicDemo extends React.Component {
 
