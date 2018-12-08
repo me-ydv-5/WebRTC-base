@@ -4,9 +4,10 @@ import {
   ReflexSplitter,
   ReflexElement
 } from 'react-reflex'
+import { Button } from 'semantic-ui-react'
 
-import 'react-reflex/styles.css'
 import '../assets/css/app.css'
+import '../assets/css/styles.css'
 
 
 class ReflexBasicDemo extends React.Component {
@@ -16,15 +17,20 @@ class ReflexBasicDemo extends React.Component {
     return (
       <ReflexContainer orientation="vertical">
 
-         <ReflexElement className="left-pane">
+         <ReflexElement className="left-pane" minSize={800}>
            <div className="pane-content">
              Left Pane (resizeable)
            </div>
+
          </ReflexElement>
 
-         <ReflexSplitter/>
+         <ReflexSplitter>
+         <div className="drag-handle">
+         <Button circular icon='arrows alternate horizontal'/>
+         </div>
+         </ReflexSplitter>
 
-         <ReflexElement className="right-pane">
+         <ReflexElement className="right-pane" minSize={400}>
            <div className="pane-content">
              Right Pane (resizeable)
            </div>
