@@ -1,3 +1,6 @@
+var channelName = require('./index.js');
+var appUtil = require('./appUtil.js');
+
 /**
  * @name handleFail
  * @param err - error thrown by any function
@@ -74,11 +77,11 @@ let client = AgoraRTC.createClient({
 
 // Client Setup
 // Defines a client for Real Time Communication
-client.init("4f1b6ead372f4e75bb25ba4ffa5d5beb",() => 
+client.init(appUtil.AGORA_API_KEY,() => 
                         console.log("AgoraRTC client initialized") ,handleFail);
 
 // The client joins the channel
-client.join(null,"any-channel",null, (uid)=>{
+client.join(null,channelName,null, (uid)=>{
 
     // Stream object associated with your web cam is initialized
     let localStream = AgoraRTC.createStream({
@@ -152,6 +155,17 @@ client.on('stream-published', function(val){
 
 });
 
+// Triggers the "volume-indicator" callback event every two seconds.
+client.enableAudioVolumeIndicator(); 
+client.on("volume-indicator", function(evt){
+    evt.attr.forEach(function(volume, index){
+        console.log('volume is ');
+        console.log(volume);
+        console.log('index is');
+        console.log(index);
+            // console.log(#{index} UID ${volume.uid} Level ${volume.level});
+    });
+});
 
 //When a person is removed from the stream
 client.on('stream-removed',removeVideoStream);

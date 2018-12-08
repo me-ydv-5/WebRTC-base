@@ -7,11 +7,15 @@
     "doc": "doc"
   },
   "dependencies": {
+    "@types/serve-favicon": "^2.2.30",
     "agora-rtc-sdk": "^2.5.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "request": "^2.88.0",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {},
   "scripts": {
