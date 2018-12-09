@@ -1,5 +1,18 @@
-var channelName = require('./index.js');
-var appUtil = require('./appUtil.js');
+var AGORA_API_KEY = '4f1b6ead372f4e75bb25ba4ffa5d5beb';
+var channelName = "foo";
+
+function getChannel() {
+    console.log("getting into get channel ");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        channelName = xhttp.responseText;
+        console.log("channel name is ", channelName);
+    }
+    xhttp.open("GET", "/getChannel", false);
+    xhttp.send();
+}
+
+getChannel();
 
 /**
  * @name handleFail
@@ -77,11 +90,13 @@ let client = AgoraRTC.createClient({
 
 // Client Setup
 // Defines a client for Real Time Communication
-client.init(appUtil.AGORA_API_KEY,() => 
+client.init(AGORA_API_KEY,() => 
                         console.log("AgoraRTC client initialized") ,handleFail);
 
+
+
 // The client joins the channel
-client.join(null,channelName,null, (uid)=>{
+client.join(null, channelName, null, (uid)=>{
 
     // Stream object associated with your web cam is initialized
     let localStream = AgoraRTC.createStream({
