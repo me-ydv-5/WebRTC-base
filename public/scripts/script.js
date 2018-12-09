@@ -1,19 +1,6 @@
 var AGORA_API_KEY = '4f1b6ead372f4e75bb25ba4ffa5d5beb';
 var channelName = "foo";
 
-function getChannel() {
-    console.log("getting into get channel ");
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        channelName = xhttp.responseText;
-        console.log("channel name is ", channelName);
-    }
-    xhttp.open("GET", "/getChannel", false);
-    xhttp.send();
-}
-
-getChannel();
-
 /**
  * @name handleFail
  * @param err - error thrown by any function
@@ -22,6 +9,19 @@ getChannel();
 let handleFail = function(err){
     console.log("Error : ", err);
 };
+
+function getChannel() {
+    console.log("getting into get channel ");
+    fetch("/getChannel").
+        then((data) => {
+            channelName = data;
+            console.log("channel name is ", channelName);
+        }).catch(handleFail);
+}
+
+getChannel();
+
+
 
 // Queries the container in which the remote feeds belong
 let remoteContainer= document.getElementById("remote-container");
@@ -92,8 +92,6 @@ let client = AgoraRTC.createClient({
 // Defines a client for Real Time Communication
 client.init(AGORA_API_KEY,() => 
                         console.log("AgoraRTC client initialized") ,handleFail);
-
-
 
 // The client joins the channel
 client.join(null, channelName, null, (uid)=>{

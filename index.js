@@ -4,6 +4,8 @@ var app = express();
 var request = require("request");
 var path    = require("path");
 var favicon = require('serve-favicon');
+// var bodyParser = require('body-parser');
+// app.use(bodyParser.json());
 
 var appUtil = require('./appUtil.js');
 
@@ -23,35 +25,52 @@ app.get("/", (req, res) => {
 
 // Send the parameter to Agora API for starting a new Channel
 // or continue with an already existing channel
-app.get("/sendChannel", (req, res) => {
-
-   var postData = {
-      secret: appUtil.CAPTCHA_SECRET,
-      response: req.query['g-recaptcha-response']
-   }
-   var options = {
-         uri: appUtil.GOOGLE_CAPTCHA_URL,
-         headers:{
-            'content-type' : 'application/x-www-form-urlencoded'
-         },
-         body: require('querystring').stringify(postData)
-   };
-   
-   request.post(options, (err, response, body) => {
-      if (err){
-         console.log(err);
-      }else{
-         var body = JSON.parse(body);
-         if(body['success'] !== true){
-            console.log('Error in processing captcha! Entry Denied.');
-         }else{
-            channelName = req.query.channelName;
-            
-            res.sendFile(path.join(__dirname+'/index.html'));
-         }
+app.post("/sendChannel", (req, res) => {
+   // req = JSON.parse(req);
+   var POST = {};
+   req.on('data', function(data) {
+      data = data.toString();
+      data = data.split('&');
+      for (var i = 0; i < data.length; i++) {
+          var _data = data[i].split("=");
+          POST[_data[0]] = _data[1];
       }
+      console.log("posting the log ");
+      console.log(POST['g-recaptcha-response']);
+
+      var postData = {
+         secret: appUtil.CAPTCHA_SECRET,
+         response: POST['g-recaptcha-response']
+      }
+      var options = {
+            uri: appUtil.GOOGLE_CAPTCHA_URL,
+            headers:{
+               'content-type' : 'application/x-www-form-urlencoded'
+            },
+            body: require('querystring').stringify(postData)
+      };
+      
+      request.post(options, (err, response, body) => {
+         if (err){
+            console.log(err);
+         }else{
+            var body = JSON.parse(body);
+            console.log(body);
+            if(body['success'] !== true){
+               console.log('Error in processing captcha! Entry Denied.');
+            }else{
+               channelName = req.query.channelName;
+               
+               res.redirect("/show");
+            }
+         }
+      });
    });
 }, handleFail);
+
+app.get("/show", (req, res) => {
+   res.sendFile(path.join(__dirname+'/index.html'));
+});
 
 app.get("/getChannel", (req, res) => {
    res.end(channelName);
