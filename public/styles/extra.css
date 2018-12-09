@@ -1,0 +1,28 @@
+.page-container{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: black;
+}
+
+.landing-form-element{
+  align-self: center;
+  background-color: #080808;
+  padding: 30px;
+}
+
+#submit-form{
+  margin: 15px 0px 0px 0px;
+}
+
+.channel-name{
+  color: white
+}
+
+
+.rc-anchor-light{
+  background-color: black;
+  color: white
+}

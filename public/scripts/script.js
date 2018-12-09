@@ -36,7 +36,7 @@ let handleFail = function(err){
 
 // Queries the container in which the remote feeds belong
 let remoteContainer= document.getElementById("remote-container");
-let canvasContainer =document.getElementById("canvas-container");
+let canvasContainer=document.getElementById("canvas-container");
 
 /**
  * @name addVideoStream
@@ -122,12 +122,9 @@ client.join(null, channelName, null, (uid)=>{
 
         //Plays the localVideo
         localStream.play('me');
-
         //Publishes the stream to the channel
         client.publish(localStream, handleFail);
-
     },handleFail);
-
 },handleFail);
 //When a stream is added to a channel
 client.on('stream-added', function (evt) {
