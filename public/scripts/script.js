@@ -35,13 +35,13 @@ let canvasContainer =document.getElementById("canvas-container");
 function addVideoStream(streamId){
     // Create a new div for every stream
     let streamDiv=document.createElement("div");
-    
+
     // Assigning id to div
     streamDiv.id=streamId;
-    
+
     // Takes care of lateral inversion (mirror image)
     streamDiv.style.transform="rotateY(180deg)";
-    
+
     // Add new div to container
     remoteContainer.appendChild(streamDiv);
 }
@@ -90,7 +90,7 @@ let client = AgoraRTC.createClient({
 
 // Client Setup
 // Defines a client for Real Time Communication
-client.init(AGORA_API_KEY,() => 
+client.init(AGORA_API_KEY,() =>
                         console.log("AgoraRTC client initialized") ,handleFail);
 
 // The client joins the channel
@@ -140,7 +140,7 @@ client.on('stream-subscribed', function(value){
     }
     var foo = client.getRemoteAudioStats(bar);
 
-    
+
     setInterval(foo, 5000);
 
 });
@@ -169,7 +169,7 @@ client.on('stream-published', function(val){
 });
 
 // Triggers the "volume-indicator" callback event every two seconds.
-client.enableAudioVolumeIndicator(); 
+client.enableAudioVolumeIndicator();
 client.on("volume-indicator", function(evt){
     evt.attr.forEach(function(volume, index){
         console.log('volume is ');
