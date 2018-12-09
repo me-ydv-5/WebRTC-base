@@ -1,16 +1,27 @@
 var AGORA_API_KEY = '4f1b6ead372f4e75bb25ba4ffa5d5beb';
 var channelName = "foo";
 
+
+//Mahacool function starts from CAPTCHA_SECRET
 function getChannel() {
-    console.log("getting into get channel ");
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        channelName = xhttp.responseText;
-        console.log("channel name is ", channelName);
-    }
-    xhttp.open("GET", "/getChannel", false);
-    xhttp.send();
+  console.log('calling channel')
+  axios.get('/getChannel').then(res => {
+    channelName = res.channelName
+    console.log(channelName)
+  }).catch(err => console.log('Error: ', err))
 }
+
+//Tatti function starts from here
+// function getChannel() {
+//     console.log("getting into get channel ");
+//     var xhttp = new XMLHttpRequest();
+//     xhttp.onreadystatechange = function(){
+//         channelName = xhttp.responseText;
+//         console.log("channel name is ", channelName);
+//     }
+//     xhttp.open("GET", "/getChannel", false);
+//     xhttp.send();
+// }
 
 getChannel();
 
@@ -35,13 +46,13 @@ let canvasContainer =document.getElementById("canvas-container");
 function addVideoStream(streamId){
     // Create a new div for every stream
     let streamDiv=document.createElement("div");
-    
+
     // Assigning id to div
     streamDiv.id=streamId;
-    
+
     // Takes care of lateral inversion (mirror image)
     streamDiv.style.transform="rotateY(180deg)";
-    
+
     // Add new div to container
     remoteContainer.appendChild(streamDiv);
 }
@@ -90,7 +101,7 @@ let client = AgoraRTC.createClient({
 
 // Client Setup
 // Defines a client for Real Time Communication
-client.init(AGORA_API_KEY,() => 
+client.init(AGORA_API_KEY,() =>
                         console.log("AgoraRTC client initialized") ,handleFail);
 
 
@@ -142,7 +153,7 @@ client.on('stream-subscribed', function(value){
     }
     var foo = client.getRemoteAudioStats(bar);
 
-    
+
     setInterval(foo, 5000);
 
 });
@@ -171,7 +182,7 @@ client.on('stream-published', function(val){
 });
 
 // Triggers the "volume-indicator" callback event every two seconds.
-client.enableAudioVolumeIndicator(); 
+client.enableAudioVolumeIndicator();
 client.on("volume-indicator", function(evt){
     evt.attr.forEach(function(volume, index){
         console.log('volume is ');
