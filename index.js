@@ -35,8 +35,6 @@ app.post("/sendChannel", (req, res) => {
           var _data = data[i].split("=");
           POST[_data[0]] = _data[1];
       }
-      console.log("posting the log ");
-      console.log(POST['g-recaptcha-response']);
 
       var postData = {
          secret: appUtil.CAPTCHA_SECRET,
@@ -55,7 +53,6 @@ app.post("/sendChannel", (req, res) => {
             console.log(err);
          }else{
             var body = JSON.parse(body);
-            console.log(body);
             if(body['success'] !== true){
                console.log('Error in processing captcha! Entry Denied.');
             }else{
