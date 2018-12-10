@@ -7,7 +7,7 @@ export default class OthersVideoFeed extends React.Component{
 
     render() {
         return(
-            <div></div>
+            <div id={'remote-container'}/>
         )
     }
 }

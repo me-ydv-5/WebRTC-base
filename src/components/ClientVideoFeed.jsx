@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {AGORA_API_KEY} from "./constants/keys";
-import {handleFail} from "./helpers/helper";
+import {AGORA_API_KEY} from "../constants/keys";
+import {handleFail} from "../helpers/helper";
 
 export default class ClientVideoFeed extends React.Component{
     constructor(props){
@@ -11,9 +11,6 @@ export default class ClientVideoFeed extends React.Component{
     }
 
     componentDidMount() {
-        const me = this.refs.me
-        console.log(me)
-
         //Client Setup
         //Defines a client for RTC
         let client = window.AgoraRTC.createClient({
@@ -39,7 +36,7 @@ export default class ClientVideoFeed extends React.Component{
             localStream.init(() => {
 
                 //Plays the localVideo
-                localStream.play('me')
+                localStream.play('me',{fit:'contain'})
                 //Publishes the stream to the channel
                 client.publish(localStream, handleFail)
             },handleFail)
@@ -51,14 +48,16 @@ export default class ClientVideoFeed extends React.Component{
         })
 
         //When you subscribe to a stream
-        client.on('stream-subscribe', (evt) => {
+        client.on('stream-subscribed', (evt) => {
             let stream = evt.stream
-            this.addVideoStream(stream.getId(),me)
-            stream.play(stream.getId())
+            this.addVideoStream(stream.getId())
+            stream.play(stream.getId(),{fit:'contain'})
+
         })
 
-        client.on('stream-subscribed', (value) => {
+        client.on('stream-subscribed', (evt) => {
             console.log('Stream Subscribed')
+            let stream = evt.stream
             var bar = (value) => {
                 console.log('Bar value: ', value)
             }
@@ -100,18 +99,31 @@ export default class ClientVideoFeed extends React.Component{
         client.on('peer-leave', this.removeVideoStream)
     }
 
-    addVideoStream(streamId, node){
-        console.lo('Node:\n',node )
-        console.log('streamId',streamId)
+
+
+    addVideoStream(streamId){
+        let remoteContainer = document.getElementById('remote-container')
+        let streamDiv=document.createElement("div");
+        streamDiv.classList.add('remote-feeds')
+        // Assigning id to div
+        streamDiv.id=streamId;
+        // Takes care of lateral inversion (mirror image)
+        // Add new div to container
+        remoteContainer.appendChild(streamDiv);
+        this.props.getFeed(streamId)
     }
 
     removeVideoStream(evt){
-        let strea
+        let stream = evt.stream;
+        stream.stop();
+        let remDiv=document.getElementById(stream.getId());
+        remDiv.parentNode.removeChild(remDiv);
+        console.log("Remote stream is removed " + stream.getId())
     }
 
     render() {
         return(
-            <div id={'me'} ref={'me'}/>
+            <div id={'me'}/>
         )
     }
 }
