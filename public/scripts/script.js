@@ -1,9 +1,9 @@
 var AGORA_API_KEY = '4f1b6ead372f4e75bb25ba4ffa5d5beb';
-var channelName = "foo";
+var channelName = "def";
 
 /**
  * @name handleFail
- * @param err - error thrown by any function
+ * @param err Error thrown by any function
  * @description Helper function to handle errors
  */
 let handleFail = function(err){
@@ -11,12 +11,12 @@ let handleFail = function(err){
 };
 
 function getChannel() {
-    console.log("getting into get channel ");
-    fetch("/getChannel").
-        then((data) => {
+    fetch("/getChannel")
+        .then((data) => {
             channelName = data;
-            console.log("channel name is ", channelName);
-        }).catch(handleFail);
+            console.log("Channel name is ", channelName);
+        })
+        .catch(handleFail);
 }
 
 getChannel();
@@ -25,7 +25,7 @@ getChannel();
 
 // Queries the container in which the remote feeds belong
 let remoteContainer= document.getElementById("remote-container");
-let canvasContainer=document.getElementById("canvas-container");
+let canvasContainer =document.getElementById("canvas-container");
 
 /**
  * @name addVideoStream
@@ -35,13 +35,13 @@ let canvasContainer=document.getElementById("canvas-container");
 function addVideoStream(streamId){
     // Create a new div for every stream
     let streamDiv=document.createElement("div");
-
+    
     // Assigning id to div
     streamDiv.id=streamId;
-
+    
     // Takes care of lateral inversion (mirror image)
     streamDiv.style.transform="rotateY(180deg)";
-
+    
     // Add new div to container
     remoteContainer.appendChild(streamDiv);
 }
@@ -90,7 +90,7 @@ let client = AgoraRTC.createClient({
 
 // Client Setup
 // Defines a client for Real Time Communication
-client.init(AGORA_API_KEY,() =>
+client.init(AGORA_API_KEY,() => 
                         console.log("AgoraRTC client initialized") ,handleFail);
 
 // The client joins the channel
@@ -109,9 +109,12 @@ client.join(null, channelName, null, (uid)=>{
 
         //Plays the localVideo
         localStream.play('me');
+
         //Publishes the stream to the channel
         client.publish(localStream, handleFail);
+
     },handleFail);
+
 },handleFail);
 //When a stream is added to a channel
 client.on('stream-added', function (evt) {
@@ -137,7 +140,7 @@ client.on('stream-subscribed', function(value){
     }
     var foo = client.getRemoteAudioStats(bar);
 
-
+    
     setInterval(foo, 5000);
 
 });
@@ -166,7 +169,7 @@ client.on('stream-published', function(val){
 });
 
 // Triggers the "volume-indicator" callback event every two seconds.
-client.enableAudioVolumeIndicator();
+client.enableAudioVolumeIndicator(); 
 client.on("volume-indicator", function(evt){
     evt.attr.forEach(function(volume, index){
         console.log('volume is ');
