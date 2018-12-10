@@ -6,6 +6,9 @@ import {
 } from 'react-reflex'
 import { Button } from 'semantic-ui-react'
 
+import ClientVideoFeed from './ClientVideoFeed'
+import OthersVideoFeed from './OthersVideoFeed'
+
 import '../assets/css/app.css'
 import '../assets/css/styles.css'
 
@@ -18,10 +21,7 @@ class ReflexBasicDemo extends React.Component {
       <ReflexContainer orientation="vertical">
 
          <ReflexElement className="left-pane" minSize={800}>
-           <div className="pane-content">
-             Left Pane (resizeable)
-           </div>
-
+             <ClientVideoFeed />
          </ReflexElement>
 
          <ReflexSplitter>
@@ -31,9 +31,7 @@ class ReflexBasicDemo extends React.Component {
          </ReflexSplitter>
 
          <ReflexElement className="right-pane" minSize={400}>
-           <div className="pane-content">
-             Right Pane (resizeable)
-           </div>
+           <OthersVideoFeed />
          </ReflexElement>
 
        </ReflexContainer>
