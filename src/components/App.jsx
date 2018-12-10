@@ -11,6 +11,7 @@ import OthersVideoFeed from './OthersVideoFeed'
 
 import '../assets/css/app.css'
 import '../assets/css/styles.css'
+import '../assets/css/canvas.css'
 
 
 class ReflexBasicDemo extends React.Component {
@@ -18,25 +19,29 @@ class ReflexBasicDemo extends React.Component {
   render () {
 
     return (
-      <ReflexContainer orientation="vertical">
 
-         <ReflexElement className="left-pane" minSize={800}>
-             <ClientVideoFeed />
-         </ReflexElement>
+        <ReflexContainer orientation="vertical">
 
-         <ReflexSplitter>
-         <div className="drag-handle">
-         <Button circular icon='arrows alternate horizontal'/>
-         </div>
-         </ReflexSplitter>
+            <ReflexElement className="left-pane" minSize={800}>
+            </ReflexElement>
+                <ClientVideoFeed/>
+            <ReflexSplitter>
+                <div className="drag-handle">
+                    <Button circular icon='arrows alternate horizontal'/>
+                </div>
+            </ReflexSplitter>
 
-         <ReflexElement className="right-pane" minSize={400}>
-           <OthersVideoFeed />
-         </ReflexElement>
+            <ReflexElement className="right-pane" minSize={400}>
+                <OthersVideoFeed />
+            </ReflexElement>
 
-       </ReflexContainer>
-   )
+        </ReflexContainer>
+
+
+    )
   }
 }
 
 export default ReflexBasicDemo
+
+
