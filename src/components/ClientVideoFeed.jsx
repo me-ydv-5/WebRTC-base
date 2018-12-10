@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import {AGORA_API_KEY} from "../constants/keys";
 import {handleFail} from "../helpers/helper";
 
