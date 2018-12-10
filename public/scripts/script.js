@@ -12,9 +12,14 @@ let handleFail = function(err){
 
 function getChannel() {
     fetch("/getChannel")
-        .then((data) => {
-            channelName = data;
-            console.log("Channel name is ", channelName);
+        .then((data) =>  {
+            var be = data.json();
+            return be;
+        })
+        .then(data => {
+            console.log(data);
+            channelName = data['channelName'];
+            console.log("Channel name is " + channelName);
         })
         .catch(handleFail);
 }

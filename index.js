@@ -78,39 +78,39 @@ app.get("/show", (req, res) => {
    res.sendFile(path.join(__dirname+'/index.html'));
 });
 
-app.get('/getChannel', (req, res) => {
-   console.log("get chanel ch " + channelName);
-   res.end(channelName);
-}, handleFail);
-
-// app.get("/getChannel", (req, res) => {
-//    // if(channelName === ""){
-//    //    let err = new Error('No Channel Found');
-//    //    err.statusCode = 403;
-//    //    Console.log("empty channel");
-//    //    res.redirect("/errorcode123");
-//    // }else{
-//       Console.log("Channel name is from index  " + channelName);
-//       res.send(channelName);
-//    // }
+// app.get('/getChannel', (req, res) => {
+//    console.log("get chanel ch " + channelName);
+//    res.send({channelName: channelName});
 // }, handleFail);
 
-// app.use(function(req, res, next) {
-//    let err = new Error('Page Not Found');
-//    err.statusCode = 404;
-//    next(err);   
-// });
-// app.use(function(error, req, res, next) {
-//    ejs.renderFile("./404.ejs", {code: error.statusCode, 
-//       string: "It's okay to come here, it's not a cardinal sin. But now, "},
-//       {client: true},(err, str) =>{
-//          if(err)
-//             console.log(err);
-//          else{
-//             res.end(str);
-//          }
-//       });
-// });
+app.get("/getChannel", (req, res) => {
+   if(channelName === ""){
+      let err = new Error('No Channel Found');
+      err.statusCode = 403;
+      console.log("empty channel");
+      res.redirect("/errorcode123");
+   }else{
+      console.log("Channel name is from index  " + channelName);
+      res.send({channelName: channelName});
+   }
+}, handleFail);
+
+app.use(function(req, res, next) {
+   let err = new Error('Page Not Found');
+   err.statusCode = 404;
+   next(err);   
+});
+app.use(function(error, req, res, next) {
+   ejs.renderFile("./404.ejs", {code: error.statusCode, 
+      string: "It's okay to come here, it's not a cardinal sin. But now, "},
+      {client: true},(err, str) =>{
+         if(err)
+            console.log(err);
+         else{
+            res.end(str);
+         }
+      });
+});
 
 app.listen(8081);
 
