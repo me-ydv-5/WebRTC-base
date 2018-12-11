@@ -21,14 +21,6 @@ class App extends React.Component {
         this.getIds = this.getIds.bind(this)
     }
 
-    componentDidMount() {
-        console.log(this.props)
-    }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        console.log('Client video feed props',this.props)
-    }
-
     getIds(id){
         // document.getElementById(`video${id}`).style.objectFit = 'contain'
     }

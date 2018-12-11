@@ -5,7 +5,7 @@ import {getChannelNames, handleFail} from "../helpers/helper";
 export default class ClientVideoFeed extends React.Component{
     constructor(props){
         super(props)
-        this.state = {stop: false}
+        this.state = {stop: false, stats: null}
         this.addVideoStream = this.addVideoStream.bind(this)
         this.removeVideoStream = this.removeVideoStream.bind(this)
     }
@@ -14,7 +14,7 @@ export default class ClientVideoFeed extends React.Component{
         //Client Setup
         //Defines a client for RTC
         const channelName = window.location.search.split('=')[1]
-        let client = window.AgoraRTC.createClient({
+        let client = window.agora = window.AgoraRTC.createClient({
             mode: 'live',
             codec: 'h264'
         })
@@ -26,7 +26,7 @@ export default class ClientVideoFeed extends React.Component{
         //The Client joins the channel
         client.join(null, channelName, null, (uid) =>{
             //Stream object associated with your web cam is initalized
-            let localStream = window.AgoraRTC.createStream({
+            let localStream = window.localStream = window.AgoraRTC.createStream({
                 streamID: uid,
                 audio:true,
                 video:true,
@@ -72,6 +72,7 @@ export default class ClientVideoFeed extends React.Component{
         client.on('stream-published', val => {
             client.getSystemStats(stats => {
                 console.log("Battery level: " + stats.BatteryLevel)
+                this.setState({stats: stats.BatteryLevel})
             })
 
             setInterval(()=>{
@@ -119,7 +120,11 @@ export default class ClientVideoFeed extends React.Component{
         stream.stop();
         let remDiv=document.getElementById(stream.getId());
         remDiv.parentNode.removeChild(remDiv);
-        console.log("Remote stream is removed " + stream.getId())
+    }
+
+    componentWillUnmount() {
+        console.log('UNOINOSIDNFSIDF')
+        window.localStream.close()
     }
 
 

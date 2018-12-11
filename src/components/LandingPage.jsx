@@ -26,14 +26,11 @@ class LandingPage extends React.Component {
 
     handleSubmit(event){
         storeChannels(this.state.value, false)
-        window.location = `/app?channel=${this.state.value}`
-        // this.props.history.push(`/app?room=${this.state.value}`)
+        // window.location = `/app?channel=${this.state.value}`
+        this.props.history.push(`/app?room=${this.state.value}`)
         event.preventDefault()
     }
 
-    componentWillReceiveProps(nextProps, nextContext) {
-        console.log('landing page props', this.props)
-    }
 
     render() {
         return (
