@@ -1,10 +1,11 @@
 import React from 'react'
 import {AGORA_API_KEY} from "../constants/keys";
-import {handleFail} from "../helpers/helper";
+import {getChannelNames, handleFail} from "../helpers/helper";
 
 export default class ClientVideoFeed extends React.Component{
     constructor(props){
         super(props)
+        this.state = {stop: false}
         this.addVideoStream = this.addVideoStream.bind(this)
         this.removeVideoStream = this.removeVideoStream.bind(this)
     }
@@ -12,6 +13,7 @@ export default class ClientVideoFeed extends React.Component{
     componentDidMount() {
         //Client Setup
         //Defines a client for RTC
+        const channelName = window.location.search.split('=')[1]
         let client = window.AgoraRTC.createClient({
             mode: 'live',
             codec: 'h264'
@@ -22,7 +24,7 @@ export default class ClientVideoFeed extends React.Component{
             console.log("AgoraRTC client initialized") ,handleFail);
 
         //The Client joins the channel
-        client.join(null, 'default-channel', null, (uid) =>{
+        client.join(null, channelName, null, (uid) =>{
             //Stream object associated with your web cam is initalized
             let localStream = window.AgoraRTC.createStream({
                 streamID: uid,
@@ -96,8 +98,8 @@ export default class ClientVideoFeed extends React.Component{
         //When a person is removed from the stream
         client.on('stream-removed', this.removeVideoStream)
         client.on('peer-leave', this.removeVideoStream)
-    }
 
+    }
 
 
     addVideoStream(streamId){
@@ -119,6 +121,7 @@ export default class ClientVideoFeed extends React.Component{
         remDiv.parentNode.removeChild(remDiv);
         console.log("Remote stream is removed " + stream.getId())
     }
+
 
     render() {
         return(

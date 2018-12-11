@@ -12,13 +12,21 @@ import '../assets/css/app.css'
 import '../assets/css/styles.css'
 import '../assets/css/canvas.css'
 
-class ReflexBasicDemo extends React.Component {
+class App extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             ids: []
         }
         this.getIds = this.getIds.bind(this)
+    }
+
+    componentDidMount() {
+        console.log(this.props)
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        console.log('Client video feed props',this.props)
     }
 
     getIds(id){
@@ -46,4 +54,4 @@ class ReflexBasicDemo extends React.Component {
   }
 }
 
-export default ReflexBasicDemo
+export default App
