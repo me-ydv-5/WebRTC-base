@@ -12,3 +12,5 @@ export function storeChannels(val) {
 export function getChannelNames() {
     return channels
 }
+
+export const audioFile = 'http://www.littlegrantvillebluegrass.com/music/%20Track6.mp3'

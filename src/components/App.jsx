@@ -30,7 +30,7 @@ class App extends React.Component {
         <ReflexContainer orientation="vertical">
 
             <ReflexElement className="left-pane" minSize={800}>
-                <ClientVideoFeed getFeed={this.getIds}/>
+                <OthersVideoFeed ids={this.state.ids}/>
             </ReflexElement>
             <ReflexSplitter>
                 <div className="drag-handle">
@@ -38,7 +38,7 @@ class App extends React.Component {
                 </div>
             </ReflexSplitter>
             <ReflexElement className="right-pane" minSize={400}>
-                <OthersVideoFeed ids={this.state.ids}/>
+                <ClientVideoFeed getFeed={this.getIds}/>
             </ReflexElement>
         </ReflexContainer>
 

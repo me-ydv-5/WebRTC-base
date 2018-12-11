@@ -40,7 +40,7 @@ class LandingPage extends React.Component {
                         <p style={{marginBottom:15, color:'white'}}>Channel Name:</p>
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
-                    <input type="submit" value="Submit" style={{color:'white'}}/>
+                    <input type="submit" className={'button-primary'} value="Submit" style={{color:'white'}}/>
                 </form>
             </LandingPageWrapper>
         )
