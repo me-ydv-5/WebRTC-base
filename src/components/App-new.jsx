@@ -1,9 +1,4 @@
 import React from 'react'
-import {
-    ReflexContainer,
-    ReflexSplitter,
-    ReflexElement
-} from 'react-reflex'
 import {Button} from 'semantic-ui-react'
 import ClientVideoFeed from './ClientVideoFeed'
 import OthersVideoFeed from './OthersVideoFeed'
@@ -14,25 +9,32 @@ import '../assets/css/canvas.css'
 import {AGORA_API_KEY} from "../constants/keys";
 import {handleFail} from "../helpers/helper";
 
+//TODO Clear styles
+
+const app = {
+    app: {display: 'flex', height: '100vh'},
+    currentRemote: {height: '100%', width: '70%'},
+    dash: {height: '100%', width: '30%'},
+    client: {height: '300px', borderBottom: '2px solid yellow'},
+    remote: {height: 'calc(100% - 300px)', overflowY: 'scroll'}
+
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            battery: 0
+            battery: 0,
+            current: null
         }
+        this.getCurrentId = this.getCurrentId.bind(this);
+        this.state = {update:false}
     }
 
     componentDidMount() {
-        //Client Setup
-        //Defines a client for RTC
-        let client = window.agora = window.AgoraRTC.createClient({
-            mode: 'live',
-            codec: 'h264'
-        })
 
-        //Defines a client for Real Time Communication
-        client.init(AGORA_API_KEY, () =>
-            console.log("AgoraRTC client initialized"), handleFail);
+        //Defines a client for RTC
+        let client = window.agora
 
         // Quality Transparency
         client.on('stream-published', val => {
@@ -64,30 +66,39 @@ class App extends React.Component {
                 console.log(`#${index} UID ${volume.uid} Level ${volume.level}`);
             });
         });
+    }
 
 
-        //When a person is removed from the stream
-        client.on('stream-removed', this.removeVideoStream)
-        client.on('peer-leave', this.removeVideoStream)
+    getCurrentId(video, streamIds) {
+        window.stream.stop()
+        console.log(streamIds)
+        if(video) {
+            video.style.height = '100vh'
+            video.style.width = '100%'
+            video.removeEventListener('click', () => {
+            })
+            document.getElementById('current').appendChild(video)
+        }
+        window.stream.play(video.id,{fit:'content'})
+
     }
 
     render() {
 
         return (
-            <ReflexContainer orientation="vertical">
-
-                <ReflexElement className="left-pane" minSize={800}>
-                    <OthersVideoFeed ids={this.state.ids}/>
-                </ReflexElement>
-                <ReflexSplitter>
-                    <div className="drag-handle">
-                        <Button circular icon='arrows alternate horizontal'/>
+            <div style={app.app}>
+                <div style={app.currentRemote}>
+                    <div id={'current'}/>
+                </div>
+                <div style={app.dash}>
+                    <div style={app.client}>
+                        <ClientVideoFeed battery={this.state.battery}/>
                     </div>
-                </ReflexSplitter>
-                <ReflexElement className="right-pane" minSize={400}>
-                    <ClientVideoFeed battery={this.state.battery} getFeed={this.getIds}/>
-                </ReflexElement>
-            </ReflexContainer>
+                    <div style={app.remote}>
+                        <OthersVideoFeed feeds={this.state.feeds} getCurrentId={this.getCurrentId}/>
+                    </div>
+                </div>
+            </div>
 
         )
     }

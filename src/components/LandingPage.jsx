@@ -1,7 +1,6 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
 import styled from 'styled-components'
-import {storeChannels} from "../helpers/helper";
 
 const LandingPageWrapper = styled.div`
   display: flex;
@@ -25,7 +24,6 @@ class LandingPage extends React.Component {
     }
 
     handleSubmit(event){
-        storeChannels(this.state.value, false)
         // window.location = `/app?channel=${this.state.value}`
         this.props.history.push(`/app?room=${this.state.value}`)
         event.preventDefault()

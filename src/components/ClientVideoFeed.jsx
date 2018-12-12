@@ -1,18 +1,15 @@
 import React from 'react'
-import {AGORA_API_KEY} from "../constants/keys";
 import {handleFail, audioFile} from "../helpers/helper";
 import {Progress, Segment, Button} from "semantic-ui-react";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
+import {AGORA_API_KEY} from "../constants/keys";
 
 export default class ClientVideoFeed extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            battery: 0,
-            mixing: false
+            mixing: false,
+            hide: false
         }
-        this.addVideoStream = this.addVideoStream.bind(this)
-        this.removeVideoStream = this.removeVideoStream.bind(this)
         this.startMixing = this.startMixing.bind(this)
         this.pauseMixing = this.pauseMixing.bind(this)
         this.stopMixing = this.stopMixing.bind(this)
@@ -20,8 +17,7 @@ export default class ClientVideoFeed extends React.Component {
     }
 
     componentDidMount() {
-        //Client Setup
-        //Defines a client for RTC
+        //Get channel-name
         const channelName = window.location.search.split('=')[1]
         let client = window.agora = window.AgoraRTC.createClient({
             mode: 'live',
@@ -52,88 +48,6 @@ export default class ClientVideoFeed extends React.Component {
             }, handleFail)
         }, handleFail)
 
-        //When a stream is added to a channel
-        client.on('stream-added', (evt) => {
-            client.subscribe(evt.stream, handleFail)
-        })
-
-        //When you subscribe to a stream
-        client.on('stream-subscribed', (evt) => {
-            let stream = evt.stream
-            this.addVideoStream(stream.getId())
-            stream.play(stream.getId(), {fit: 'contain'})
-
-        })
-
-        client.on('stream-subscribed', (evt) => {
-            console.log('Stream Subscribed')
-            let stream = evt.stream
-            var bar = (value) => {
-                console.log('Bar value: ', value)
-            }
-
-            var foo = client.getRemoteAudioStats(bar)
-
-            setInterval(foo, 5000)
-        })
-
-
-        // Quality Transparency
-        client.on('stream-published', val => {
-            setInterval(() => {
-                client.getSystemStats(stats => {
-                    console.log("Battery level: " + stats.BatteryLevel)
-                    this.setState({battery: stats.BatteryLevel})
-                })
-            }, 5000)
-
-
-            setInterval(() => {
-                client.getLocalVideoStats(stats => {
-                    console.log('Local Video Stats:\n', stats, '\nEnding the video stats')
-                })
-
-                client.getLocalAudioStats(stats => {
-                    console.log('Local Audio Stats:\n', stats, '\nEnding the audio stats')
-                })
-
-            }, 3000)
-        })
-
-        // Triggers the "volume-indicator" callback event every two seconds.
-        client.enableAudioVolumeIndicator()
-        client.on("volume-indicator", function (evt) {
-            console.log('enters the volume indicatoe', evt.attr)
-            evt.attr.forEach(function (volume, index) {
-                console.log(`#${index} UID ${volume.uid} Level ${volume.level}`);
-            });
-        });
-
-
-        //When a person is removed from the stream
-        client.on('stream-removed', this.removeVideoStream)
-        client.on('peer-leave', this.removeVideoStream)
-
-    }
-
-
-    addVideoStream(streamId) {
-        let remoteContainer = document.getElementById('remote-container')
-        let streamDiv = document.createElement("div");
-        streamDiv.classList.add('remote-feeds')
-        // Assigning id to div
-        streamDiv.id = streamId;
-        // Takes care of lateral inversion (mirror image)
-        // Add new div to container
-        remoteContainer.appendChild(streamDiv);
-        this.props.getFeed(streamId)
-    }
-
-    removeVideoStream(evt) {
-        let stream = evt.stream;
-        stream.stop();
-        let remDiv = document.getElementById(stream.getId());
-        remDiv.parentNode.removeChild(remDiv);
     }
 
     startMixing() {
@@ -168,10 +82,11 @@ export default class ClientVideoFeed extends React.Component {
 
 
     render() {
+        const {battery} = this.props
         let status = {success: false, warning: false, error: false}
-        if (this.state.battery >= 50) {
+        if (battery >= 50) {
             status = {success: true, warning: false, error: false}
-        } else if (this.state.battery < 50 && this.state.battery > 10) {
+        } else if (battery < 50 && battery > 10) {
             status = {success: false, warning: true, error: false}
         } else {
             status = {success: false, warning: false, error: true}
@@ -184,20 +99,31 @@ export default class ClientVideoFeed extends React.Component {
                 <div style={{position: 'absolute', top: 0, width: '100%'}}>
                     <Progress
                         style={{width: '100%'}}
-                        percent={this.state.battery}
+                        percent={battery}
                         inverted color='black'
                         progress
                         {...status}
                     >
                         Battery
                     </Progress>
-                    <Segment inverted>Audio Mixing Controls</Segment>
-                    <Segment inverted style={{display:'flex', justifyContent:'center'}}>
-                        <Button onClick={this.startMixing} icon={'music'} content={'Start'}  color={'green'} labelPosition={'left'}/>
-                        <Button onClick={this.resumeMixing} icon='play' color={'blue'} content={'Resume'} labelPosition={'left'}/>
-                        <Button onClick={this.pauseMixing} icon='pause' content='Pause' color={'grey'} labelPosition={'left'}/>
-                        <Button onClick={this.stopMixing} icon='stop' color={'red'} content={'Stop'} labelPosition={'left'}/>
-                    </Segment>
+                </div>
+                {/*<Button onClick={this.setState({})}/>*/}
+                <div style={{position: 'absolute', bottom: '0', width: '100%'}}>
+                    <Button onClick={() => this.setState({hide: !this.state.hide})}
+                            content={this.state.hide ? 'Close Audio Mixing Controls' : 'Open Audio Mixing controls'}
+                            color={this.state.hide ? 'grey' : 'black'}/>
+                    {this.state.hide &&
+                    <Segment inverted style={{margin: 0, display: 'flex', justifyContent: 'center', zIndex: 2}}>
+                        <Button onClick={this.startMixing} icon={'music'} content={'Start'} color={'green'}
+                                labelPosition={'left'}/>
+                        <Button onClick={this.resumeMixing} icon='play' color={'blue'} content={'Resume'}
+                                labelPosition={'left'}/>
+                        <Button onClick={this.pauseMixing} icon='pause' content='Pause' color={'grey'}
+                                labelPosition={'left'}/>
+                        <Button onClick={this.stopMixing} icon='stop' color={'red'} content={'Stop'}
+                                labelPosition={'left'}/>
+                    </Segment>}
+
                 </div>
             </div>
         )

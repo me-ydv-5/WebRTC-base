@@ -1,5 +1,5 @@
 #me{
-    height: 100vh;
+    height: 300px;
     width: 100%;
 }
 
@@ -10,7 +10,17 @@
 }
 
 .remote-feeds{
-    height: 477px;
+    height:300px;
     width: 100%;
 }
 
+
+.remote-feeds-current{
+    height:100vh;
+    width: 100%;
+}
+
+#current{
+    height: 100vh;
+    width: 100%;
+}
