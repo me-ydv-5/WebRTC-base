@@ -27,7 +27,7 @@ class App extends React.Component {
             battery: 0,
             current: null
         }
-        this.getCurrentId = this.getCurrentId.bind(this);
+        // this.getCurrentId = this.getCurrentId.bind(this);
         this.state = {update:false}
     }
 
@@ -69,19 +69,19 @@ class App extends React.Component {
     }
 
 
-    getCurrentId(video, streamIds) {
-        window.stream.stop()
-        console.log(streamIds)
-        if(video) {
-            video.style.height = '100vh'
-            video.style.width = '100%'
-            video.removeEventListener('click', () => {
-            })
-            document.getElementById('current').appendChild(video)
-        }
-        window.stream.play(video.id,{fit:'content'})
-
-    }
+    // getCurrentId(video, streamIds) {
+    //     window.stream.stop()
+    //     console.log(streamIds)
+    //     if(video) {
+    //         video.style.height = '100vh'
+    //         video.style.width = '100%'
+    //         video.removeEventListener('click', () => {
+    //         })
+    //         document.getElementById('current').appendChild(video)
+    //     }
+    //     window.stream.play(video.id,{fit:'content'})
+    //
+    // }
 
     render() {
 
@@ -95,7 +95,7 @@ class App extends React.Component {
                         <ClientVideoFeed battery={this.state.battery}/>
                     </div>
                     <div style={app.remote}>
-                        <OthersVideoFeed feeds={this.state.feeds} getCurrentId={this.getCurrentId}/>
+                        <OthersVideoFeed feeds={this.state.feeds}/>
                     </div>
                 </div>
             </div>
