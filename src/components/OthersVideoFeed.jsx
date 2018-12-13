@@ -45,7 +45,7 @@ export default class OthersVideoFeed extends React.Component{
     }
 
     handleClick(evt){
-        //Logic to render back the id in place
+        //Logic to render back the feed from current to remote-feeds
         let {removed} = this.state
         if(removed){
             let videofeed = document.getElementById('video' + removed)
@@ -73,21 +73,6 @@ export default class OthersVideoFeed extends React.Component{
         audiofeed.play()
         if(document.getElementById(_id)) document.getElementById(_id).remove()
         this.setState({removed:_id})
-        // let streamDiv = document.createElement("div");
-        // streamDiv.classList.add('remote-feeds-current')
-        // // Assigning id to div
-        // streamDiv.id = evt.target.id;
-        // // Add new div to container
-        // currentNode.appendChild(streamDiv);
-        // // this.props.getCurrentId(currentNode, this.state.streamIds)
-        // // if(this.state.currentNode !== currentNode && this.state.currentNode !== null){
-        // //     console.log('inside ifffffff', this.state.removed)
-        // //     document.getElementById('remote-container').appendChild(this.state.currentNode)
-        // //     window.stream.play(this.state.currentNode.id,{fit:'contain'})
-        // // }
-        //
-        // this.setState({current: _id})
-        // console.log(this.state.currentNode)
 
     }
 
@@ -106,7 +91,7 @@ export default class OthersVideoFeed extends React.Component{
         console.log("RERMEORMEORMEOMROEMRO")
         let stream = window.stopStream = evt.stream;
         stream.stop();
-        document.getElementById(stream.getId()).remove();
+        if(document.getElementById(stream.getId())) document.getElementById(stream.getId()).remove()
     }
 
     render() {
