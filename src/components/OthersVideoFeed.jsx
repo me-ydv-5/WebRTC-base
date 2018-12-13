@@ -5,7 +5,7 @@ export default class OthersVideoFeed extends React.Component{
     constructor(props){
         super(props)
         this.state= {
-            current: null
+            removed: null
         }
         this.addVideoStream = this.addVideoStream.bind(this);
         this.removeVideoStream = this.removeVideoStream.bind(this);
@@ -46,22 +46,22 @@ export default class OthersVideoFeed extends React.Component{
 
     handleClick(evt){
         //Logic to render back the feed from current to remote-feeds
+        let id = evt.target.id
+        console.log(evt.target.id)
+        let _id = evt.target.id.split('video')[1]
         let {removed} = this.state
-        if(removed){
+        if(removed && removed !== _id){
             let videofeed = document.getElementById('video' + removed)
             let audiofeed = document.getElementById('audio' + removed)
             let remoteNode = document.getElementById('remote-container')
-            videofeed.addEventListener('click',this.handleClick)
             remoteNode.appendChild(videofeed)
             remoteNode.appendChild(audiofeed)
             videofeed.play()
             audiofeed.play()
+            videofeed.addEventListener('click',this.handleClick)
         }
 
         //Add video to the left
-        let id = evt.target.id
-        console.log(evt.target.id)
-        let _id = evt.target.id.split('video')[1]
         let videofeed = document.getElementById(id)
         videofeed.style.position = 'initial'
         let audiofeed = document.getElementById('audio' + _id)
@@ -91,6 +91,10 @@ export default class OthersVideoFeed extends React.Component{
         console.log("RERMEORMEORMEOMROEMRO")
         let stream = window.stopStream = evt.stream;
         stream.stop();
+        let id = stream.getId()
+        if(id === this.state.removed) this.setState({removed:null})
+        if(document.getElementById('video' + id)) document.getElementById('video' + id).remove()
+        if(document.getElementById('audio' + id)) document.getElementById('audio' + id).remove()
         if(document.getElementById(stream.getId())) document.getElementById(stream.getId()).remove()
     }
 
