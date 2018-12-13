@@ -92,7 +92,7 @@ export default class OthersVideoFeed extends React.Component{
         let stream = window.stopStream = evt.stream;
         stream.stop();
         let id = stream.getId()
-        if(id === this.state.removed) this.setState({removed:null})
+        if(id.toString() === this.state.removed) this.setState({removed:null})
         if(document.getElementById('video' + id)) document.getElementById('video' + id).remove()
         if(document.getElementById('audio' + id)) document.getElementById('audio' + id).remove()
         if(document.getElementById(stream.getId())) document.getElementById(stream.getId()).remove()

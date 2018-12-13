@@ -17,6 +17,7 @@ export default class ClientVideoFeed extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.props)
         //Get channel-name
         const channelName = window.location.search.split('=')[1]
         let client = window.agora = window.AgoraRTC.createClient({
@@ -100,7 +101,8 @@ export default class ClientVideoFeed extends React.Component {
                     <Progress
                         style={{width: '100%'}}
                         percent={battery}
-                        inverted color='black'
+                        inverted
+                        color='black'
                         progress
                         {...status}
                     >
