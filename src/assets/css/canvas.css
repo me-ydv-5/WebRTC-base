@@ -1,0 +1,33 @@
+body{
+    background: black;
+}
+
+#me{
+    height: 300px;
+    width: 100%;
+    position: relative;
+}
+
+
+#remote-container{
+    height: 100%;
+    width: 100%;
+}
+
+.remote-feeds{
+    height:300px;
+    width: 100%;
+}
+
+
+.remote-feeds-current{
+    height:100vh;
+    width: 100%;
+}
+
+#current{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+
+}

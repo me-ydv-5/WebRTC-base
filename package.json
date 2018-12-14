@@ -1,6 +1,6 @@
 {
   "name": "agora",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Devpost's Agora Video SDK Hackathon ",
   "main": "index.js",
   "directories": {
@@ -16,12 +16,21 @@
     "multer": "^1.4.1",
     "querystring": "^0.2.0",
     "request": "^2.88.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "axios": "^0.18.0",
+    "query-string": "^6.2.0",
+    "react": "^16.6.3",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.6.3",
+    "react-grid-layout": "^0.16.6",
+    "react-reflex": "^3.0.6",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "react-tooltip": "^3.9.0",
+    "semantic-ui-react": "^0.83.0",
+    "styled-components": "^4.1.2"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/me-ydv-5/agora-hackathon.git"
@@ -42,5 +51,21 @@
   "bugs": {
     "url": "https://github.com/me-ydv-5/agora-hackathon/issues"
   },
-  "homepage": "https://github.com/me-ydv-5/agora-hackathon#readme"
+  "homepage": "https://github.com/me-ydv-5/agora-hackathon#readme",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
