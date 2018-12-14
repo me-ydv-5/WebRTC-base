@@ -28,7 +28,7 @@ class LandingPage extends React.Component {
         event.preventDefault()
         const gCaptcha = event.target[1].value;
         var options = {
-            uri: '/sendChannel',
+            uri: 'http://localhost:8081/sendChannel',
             form: {
                response: gCaptcha
             }

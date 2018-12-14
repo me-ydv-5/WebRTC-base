@@ -1,5 +1,8 @@
 var express = require("express");
 var app = express();
+var cors = require('cors');
+
+app.use(cors());
 
 var request = require("request");
 var favicon = require('serve-favicon');
@@ -45,7 +48,7 @@ app.post("/sendChannel", (req, res) => {
             },
             body: require('querystring').stringify({
                secret: appUtil.CAPTCHA_SECRET,
-               response: POST['g-recaptcha-response']
+               response: POST['response']
             })
       };
       
@@ -53,6 +56,7 @@ app.post("/sendChannel", (req, res) => {
          if (err){
             console.log("Error occured while calling captcha url: ", err);
          }else{
+         	console.log(body)
             var body = JSON.parse(body);
             if(body['success'] !== true){
                console.log('Error in processing captcha! Entry Denied.');
@@ -62,7 +66,7 @@ app.post("/sendChannel", (req, res) => {
                      if(err)
                         console.log(err);
                      else{
-                        res.end(str);
+                        res.render(str);
                      }
                   });
             }else{
