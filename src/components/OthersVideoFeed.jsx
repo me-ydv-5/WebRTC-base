@@ -5,9 +5,7 @@ export default class OthersVideoFeed extends React.Component{
     constructor(props){
         super(props)
         this.state= {
-            removed: null,
-            streamIds: [],
-            currentNode: null
+            removed: null
         }
         this.addVideoStream = this.addVideoStream.bind(this);
         this.removeVideoStream = this.removeVideoStream.bind(this);
@@ -47,32 +45,44 @@ export default class OthersVideoFeed extends React.Component{
     }
 
     handleClick(evt){
-        window.stream.stop()
+        //Logic to render back the feed from current to remote-feeds
+        let id = evt.target.id
         console.log(evt.target.id)
         let _id = evt.target.id.split('video')[1]
-        let currentNode = document.getElementById(_id)
-        this.props.getCurrentId(currentNode, this.state.streamIds)
-        if(this.state.currentNode !== currentNode && this.state.currentNode !== null){
-            console.log('inside ifffffff', this.state.removed)
-            document.getElementById('remote-container').appendChild(this.state.currentNode)
-            window.stream.play(this.state.currentNode.id,{fit:'contain'})
+        let {removed} = this.state
+        if(removed && removed !== _id){
+            let videofeed = document.getElementById('video' + removed)
+            let audiofeed = document.getElementById('audio' + removed)
+            let remoteNode = document.getElementById('remote-container')
+            remoteNode.appendChild(videofeed)
+            remoteNode.appendChild(audiofeed)
+            videofeed.play()
+            audiofeed.play()
+            videofeed.addEventListener('click',this.handleClick)
         }
-        window.stream.play(_id, {fit: 'contain'})
 
-        this.setState({removed: currentNode})
-        console.log(this.state.currentNode)
+        //Add video to the left
+        let videofeed = document.getElementById(id)
+        videofeed.style.position = 'initial'
+        let audiofeed = document.getElementById('audio' + _id)
+        let currentNode = document.getElementById('current')
+        currentNode.classList.add('remote-feeds-current')
+        currentNode.appendChild(videofeed)
+        currentNode.appendChild(audiofeed)
+        videofeed.play()
+        audiofeed.play()
+        if(document.getElementById(_id)) document.getElementById(_id).remove()
+        this.setState({removed:_id})
 
     }
 
     addVideoStream(streamId) {
-        this.setState({streamIds: this.state.streamIds.concat(streamId)})
         let remoteContainer = document.getElementById('remote-container')
         let streamDiv = document.createElement("div");
         streamDiv.classList.add('remote-feeds')
         // Assigning id to div
         streamDiv.id = streamId;
         streamDiv.addEventListener('click',this.handleClick)
-        // Takes care of lateral inversion (mirror image)
         // Add new div to container
         remoteContainer.appendChild(streamDiv);
     }
@@ -81,11 +91,11 @@ export default class OthersVideoFeed extends React.Component{
         console.log("RERMEORMEORMEOMROEMRO")
         let stream = window.stopStream = evt.stream;
         stream.stop();
-        let remDiv = document.getElementById(stream.getId());
-        remDiv.parentNode.removeChild(remDiv);
-        if(this.state.removed === stream.getId()){
-            this.setState({removed:null})
-        }
+        let id = stream.getId()
+        if(id.toString() === this.state.removed) this.setState({removed:null})
+        if(document.getElementById('video' + id)) document.getElementById('video' + id).remove()
+        if(document.getElementById('audio' + id)) document.getElementById('audio' + id).remove()
+        if(document.getElementById(stream.getId())) document.getElementById(stream.getId()).remove()
     }
 
     render() {

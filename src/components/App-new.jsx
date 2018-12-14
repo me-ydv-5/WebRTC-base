@@ -111,19 +111,19 @@ class App extends React.Component {
         window.localStream.stopAudioMixing()
     }
 
-    getCurrentId(video, streamIds) {
-        window.stream.stop()
-        console.log(streamIds)
-        if(video) {
-            video.style.height = '100vh'
-            video.style.width = '100%'
-            video.removeEventListener('click', () => {
-            })
-            document.getElementById('current').appendChild(video)
-        }
-        window.stream.play(video.id,{fit:'content'})
-
-    }
+    // getCurrentId(video, streamIds) {
+    //     window.stream.stop()
+    //     console.log(streamIds)
+    //     if(video) {
+    //         video.style.height = '100vh'
+    //         video.style.width = '100%'
+    //         video.removeEventListener('click', () => {
+    //         })
+    //         document.getElementById('current').appendChild(video)
+    //     }
+    //     window.stream.play(video.id,{fit:'content'})
+    //
+    // }
 
     checkBattery(value) {
         const batt = value
@@ -214,13 +214,8 @@ class App extends React.Component {
                     <div style={app.currentRemote}>
                         <div id={'current'}/>
                     </div>
-                    <div style={app.dash}>
-                        <div style={app.client}>
-                            <ClientVideoFeed battery={this.state.battery}/>
-                        </div>
-                        <div style={app.remote}>
-                            <OthersVideoFeed feeds={this.state.feeds} getCurrentId={this.getCurrentId}/>
-                        </div>
+                    <div style={app.remote}>
+                        <OthersVideoFeed feeds={this.state.feeds}/>
                     </div>
                 </div>
             </div>
