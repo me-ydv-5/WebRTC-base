@@ -7,20 +7,23 @@
     "doc": "doc"
   },
   "dependencies": {
-    "@types/serve-favicon": "^2.2.30",
-    "agora-rtc-sdk": "^2.5.0",
-    "body-parser": "^1.18.3",
-    "cookie-parser": "^1.4.3",
+    "axios": "^0.18.0",
+    "concurrently": "^4.1.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "multer": "^1.4.1",
-    "querystring": "^0.2.0",
+    "query-string": "^6.2.0",
+    "react": "^16.6.3",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.6.3",
+    "react-grid-layout": "^0.16.6",
+    "react-reflex": "^3.0.6",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "react-tooltip": "^3.9.0",
     "request": "^2.88.0",
-    "serve-favicon": "^2.5.0"
+    "semantic-ui-react": "^0.83.0",
+    "styled-components": "^4.1.2"
   },
-  "devDependencies": {
-    "concurrently": "^4.1.0"
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/me-ydv-5/agora-hackathon.git"
@@ -48,13 +51,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "client": "cd client && npm start",
-    "server": "nodemon index.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
+  "proxy": "http://localhost:8081/",
   "browserslist": [
     ">0.2%",
     "not dead",

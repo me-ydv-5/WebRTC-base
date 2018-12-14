@@ -2,7 +2,6 @@ var express = require("express");
 var app = express();
 
 var request = require("request");
-var path    = require("path");
 var favicon = require('serve-favicon');
 var ejs = require('ejs');
 // var bodyParser = require('body-parser');
@@ -27,11 +26,6 @@ app.use('/scripts', express.static(__dirname + '/public/scripts'));
 app.use('/styles', express.static(__dirname + '/public/styles'));
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
-// Get the channel name on landing
-app.get("/", (req, res) => {
-   res.sendFile(path.join(__dirname+'/landing.html'));
-}, handleFail);
-
 // Send the parameter to Agora API for starting a new Channel
 // or continue with an already existing channel
 app.post("/sendChannel", (req, res) => {
@@ -55,44 +49,31 @@ app.post("/sendChannel", (req, res) => {
             })
       };
       
-      // request.post(options, (err, response, body) => {
-      //    if (err){
-      //       console.log(err);
-      //    }else{
-      //       var body = JSON.parse(body);
-      //       if(body['success'] !== true){
-      //          console.log('Error in processing captcha! Entry Denied.');
-      //       }else{
+      request.post(options, (err, response, body) => {
+         if (err){
+            console.log("Error occured while calling captcha url: ", err);
+         }else{
+            var body = JSON.parse(body);
+            if(body['success'] !== true){
+               console.log('Error in processing captcha! Entry Denied.');
+               ejs.renderFile("./404.ejs", {code: response.statusCode, 
+                  string: "Psst! Some problem has occured!"},
+                  {client: true},(err, str) =>{
+                     if(err)
+                        console.log(err);
+                     else{
+                        res.end(str);
+                     }
+                  });
+            }else{
                console.log(POST);
                channelName = POST['channelName'];
                console.log("POST channel name "+ channelName);
-               res.redirect("/show");
-      //       }
-      //    }
-      // });
+               res.send({success: true});
+            }
+         }
+      });
    });
-}, handleFail);
-
-// Make the url as the channel name
-app.get("/show", (req, res) => {
-   res.sendFile(path.join(__dirname+'/index.html'));
-});
-
-// app.get('/getChannel', (req, res) => {
-//    console.log("get chanel ch " + channelName);
-//    res.send({channelName: channelName});
-// }, handleFail);
-
-app.get("/getChannel", (req, res) => {
-   if(channelName === ""){
-      let err = new Error('No Channel Found');
-      err.statusCode = 403;
-      console.log("empty channel");
-      res.redirect("/errorcode123");
-   }else{
-      console.log("Channel name is from index  " + channelName);
-      res.send({channelName: channelName});
-   }
 }, handleFail);
 
 app.use(function(req, res, next) {

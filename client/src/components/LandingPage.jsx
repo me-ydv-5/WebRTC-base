@@ -28,14 +28,10 @@ class LandingPage extends React.Component {
         event.preventDefault()
         const gCaptcha = event.target[1].value;
         var options = {
-            uri: 'https://www.google.com/recaptcha/api/siteverify',
-            headers:{
-               'content-type' : 'application/x-www-form-urlencoded'
-            },
-            body: require('querystring').stringify({
-               secret: '6LdSmH8UAAAAAH7Gcm5hDTWD2dqLVR95WEVqoS75',
+            uri: '/sendChannel',
+            form: {
                response: gCaptcha
-            })
+            }
         };
       
         request.post(options, (err, response, body) => {
@@ -43,6 +39,7 @@ class LandingPage extends React.Component {
                 console.log("Error: ", err);
             }else{
                 var values = JSON.parse(body);
+                console.log("values: ", values);
                 if(values['success'] !== true){
                 console.log('Error in processing captcha! Entry Denied.');
                 }else{
