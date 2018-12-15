@@ -1,6 +1,5 @@
 import React from 'react'
 import {audioFile} from "../helpers/helper";
-import ClientVideoFeed from './ClientVideoFeed'
 import OthersVideoFeed from './OthersVideoFeed'
 import ReactTooltip from 'react-tooltip'
 

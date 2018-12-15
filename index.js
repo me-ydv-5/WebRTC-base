@@ -31,6 +31,11 @@ app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 // Send the parameter to Agora API for starting a new Channel
 // or continue with an already existing channel
+app.get("/", (req, res) => {
+   let e = ejs.render("This is working: by <%= code %>", {code: "Sahil!"});
+   res.end(e);
+}, handleFail);
+
 app.post("/sendChannel", (req, res) => {
    var POST = {};
    req.on('data', function(data) {

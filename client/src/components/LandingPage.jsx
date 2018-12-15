@@ -26,27 +26,27 @@ class LandingPage extends React.Component {
 
     handleSubmit(event){
         event.preventDefault()
-        const gCaptcha = event.target[1].value;
-        var options = {
-            uri: 'http://localhost:8081/sendChannel',
-            form: {
-               response: gCaptcha
-            }
-        };
+        // const gCaptcha = event.target[1].value;
+        // var options = {
+        //     uri: 'https://localhost:8081/sendChannel',
+        //     form: {
+        //        response: gCaptcha
+        //     }
+        // };
       
-        request.post(options, (err, response, body) => {
-            if (err){
-                console.log("Error: ", err);
-            }else{
-                var values = JSON.parse(body);
-                console.log("values: ", values);
-                if(values['success'] !== true){
-                console.log('Error in processing captcha! Entry Denied.');
-                }else{
+        // request.post(options, (err, response, body) => {
+        //     if (err){
+        //         console.log("Error: ", err);
+        //     }else{
+        //         var values = JSON.parse(body);
+        //         console.log("values: ", values);
+        //         if(values['success'] !== true){
+        //         console.log('Error in processing captcha! Entry Denied.');
+        //         }else{
                     this.props.history.push(`/app?room=${this.state.value}`)
-                }
-            }
-        });
+        //         }
+        //     }
+        // });
         // const body = {
         //     secret: '6LdSmH8UAAAAAH7Gcm5hDTWD2dqLVR95WEVqoS75',
         //     response: gCaptcha
@@ -93,8 +93,8 @@ class LandingPage extends React.Component {
                     <label>
                         <p style={{marginBottom:15, color:'white'}}>Channel Name:</p>
                         <input type="text" value={this.state.value} onChange={this.handleChange} required/>
-                        <div class="g-recaptcha" data-theme="dark" data-sitekey="6LdSmH8UAAAAAIeebu--oN0YSQlM-Z7MvvbuHX2b">
-                        </div>
+                        {/* <div class="g-recaptcha" data-theme="dark" data-sitekey="6LdSmH8UAAAAAIeebu--oN0YSQlM-Z7MvvbuHX2b"> */}
+                        {/* </div> */}
                     </label>
                     <input type="submit" className={'button-primary'} value="Submit" style={{color:'white'}}/>
                 </form>

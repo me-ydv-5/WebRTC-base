@@ -45,13 +45,10 @@
   "homepage": "https://github.com/me-ydv-5/agora-hackathon#readme",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "client": "cd client && npm start",
+    "client": "cd client && npm run shuru",
     "server": "nodemon index.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "start" : "cd client && npm run shuru",
+    "concurrent": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "eslintConfig": {
     "extends": "react-app"
