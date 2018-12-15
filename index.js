@@ -1,8 +1,13 @@
 var express = require("express");
 var app = express();
 var cors = require('cors');
+var fs = require('fs');
+var https = require('https');
 
-app.use(cors());
+var key = fs.readFileSync('private.key');
+let options = {
+	key
+}
 
 var request = require("request");
 var favicon = require('serve-favicon');
@@ -22,6 +27,7 @@ var channelName = "";
 let handleFail = function(err, code){
    console.log("Error : ", err);
 };
+app.use(cors());
 
 // Route the scripts and styles to their resp directories as
 // express cannot resolve absolute path for resources.
@@ -90,6 +96,7 @@ app.use(function(req, res, next) {
    err.statusCode = 404;
    next(err);   
 });
+
 app.use(function(error, req, res, next) {
    ejs.renderFile("./404.ejs", {code: error.statusCode, 
       string: "It's okay to come here, it's not a cardinal sin. But now, "},
@@ -102,6 +109,5 @@ app.use(function(error, req, res, next) {
       });
 });
 
-app.listen(8081);
-
+https.createServer(options, app).listen(8081);
 console.log('Server running at http://127.0.0.1:8081/');
