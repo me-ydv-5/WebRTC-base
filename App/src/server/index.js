@@ -32,29 +32,29 @@ app.get('/', (req, res) => {
 	res.send(renderApp())
 })
 
-app.post('/sendChannel', (req, res) => {
-	var options = {
-		url: KEYS.GOOGLE_CAPTCHA_URL,
-		headers: {
-			'content-type': 'application/x-www-form-urlencoded'
-		},
-		data: require('querystring').stringify({
-
-		})
-	};
-	const data = {
-		secret: KEYS.CAPTCHA_SECRET,
-		response: req.headers.response
-	}
-
-	axios.post(KEYS.GOOGLE_CAPTCHA_URL, data)
-		.then(res=> JSON.parse(res))
-		.then(data=>{
-			res.send(data.success)
-		})
-		.catch(err => console.log(err))
-
-})
+// app.post('/sendChannel', (req, res) => {
+// 	var options = {
+// 		url: KEYS.GOOGLE_CAPTCHA_URL,
+// 		headers: {
+// 			'content-type': 'application/x-www-form-urlencoded'
+// 		},
+// 		data: require('querystring').stringify({
+//
+// 		})
+// 	};
+// 	const data = {
+// 		secret: KEYS.CAPTCHA_SECRET,
+// 		response: req.headers.response
+// 	}
+//
+// 	axios.post(KEYS.GOOGLE_CAPTCHA_URL, data)
+// 		.then(res=> JSON.parse(res))
+// 		.then(data=>{
+// 			res.send(data.success)
+// 		})
+// 		.catch(err => console.log(err))
+//
+// })
 
 
 

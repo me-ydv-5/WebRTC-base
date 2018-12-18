@@ -18,7 +18,7 @@ const renderApp = (title: string) =>
     <script src="${STATIC_PATH}/js/agora.js"></script>
   </head>
   <body>
-    <div class="${APP_CONTAINER_CLASS}"></div>
+    <div class="${APP_CONTAINER_CLASS}" id="root"></div>
     <script src="${isProd ? STATIC_PATH : `http://localhost:${WDS_PORT}/dist`}/js/bundle.js"></script>
   </body>
 </html>

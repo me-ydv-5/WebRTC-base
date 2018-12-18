@@ -7,10 +7,6 @@ import {
 import {Button} from 'semantic-ui-react'
 import ClientVideoFeed from './ClientVideoFeed'
 import OthersVideoFeed from './OthersVideoFeed'
-
-import '../../../public/css/app.css'
-import '../../public/css/styles.css'
-import '../../public/css/canvas.css'
 import {AGORA_API_KEY} from "../constants/keys";
 import {handleFail} from "../helpers/helper";
 
