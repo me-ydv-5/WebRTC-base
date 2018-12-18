@@ -1,58 +1,30 @@
 {
-  "name": "agora",
-  "version": "1.1.0",
-  "description": "Devpost's Agora Video SDK Hackathon ",
-  "main": "index.js",
-  "directories": {
-    "doc": "doc"
-  },
+  "name": "express-react-starter",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@types/serve-favicon": "^2.2.30",
-    "agora-rtc-sdk": "^2.5.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
-    "cors": "^2.8.5",
-    "ejs": "^2.6.1",
+    "debug": "^4.1.0",
     "express": "^4.16.4",
-    "multer": "^1.4.1",
-    "querystring": "^0.2.0",
-    "request": "^2.88.0",
-    "serve-favicon": "^2.5.0"
+    "jade": "^1.11.0",
+    "morgan": "^1.9.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-tooltip": "^3.9.0"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0"
+    "concurrently": "^3.5.0",
+    "nodemon": "^1.18.9",
+    "react-scripts": "^2.1.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/me-ydv-5/agora-hackathon.git"
-  },
-  "keywords": [
-    "agora",
-    "video",
-    "SDK",
-    "hackathon",
-    "web",
-    "application",
-    "mean",
-    "node",
-    "express"
-  ],
-  "author": "Sahil",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/me-ydv-5/agora-hackathon/issues"
-  },
-  "homepage": "https://github.com/me-ydv-5/agora-hackathon#readme",
-  "private": true,
   "scripts": {
-    "client": "cd client && npm run shuru",
-    "server": "nodemon index.js",
-    "start" : "cd client && npm run shuru",
-    "concurrent": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "start": "concurrently \"react-scripts start\" \"nodemon server/server.js\"",
+    "build": "react-scripts build && mv build server",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
+  "proxy": "http://localhost:3001",
   "browserslist": [
     ">0.2%",
     "not dead",
